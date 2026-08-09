@@ -146,6 +146,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			break;
 
 		}
+		else if (LOWORD(wParam) == 1003) {
+			MessageBox(hwnd, "Soon.", "Not Added.", MB_ICONWARNING);
+			break;
+		}
+		else if (LOWORD(wParam) == 1004) {
+			MessageBox(hwnd, "Soon.", "Not Added.", MB_ICONWARNING);
+			break;
+		}
 
 	case WM_PAINT: {
 
