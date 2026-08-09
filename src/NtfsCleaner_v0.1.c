@@ -145,7 +145,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		SetBkColor(hdc, RGB(255, 255, 255));
 		SetTextColor(hdc, RGB(0, 0, 0));
 
-		TextOut(hdc, 130, 380, "# <_O Created By SpectreCore", strlen("# <_O Created By SpectreCore"));
+		TextOut(hdc, 130, 380, "# <_O Created By Spectre2Ux", strlen("# <_O Created By Spectre2Ux"));
 		TextOut(hdc, 120, 410, "V0.1 Alpha, bugs may be present.", strlen("V0.1 Alpha, bugs may be present."));
 
 		EndPaint(hwnd, &ps);
