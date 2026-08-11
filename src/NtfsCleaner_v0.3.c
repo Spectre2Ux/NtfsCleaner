@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <windows.h>
-#include <tlhelp32.h>
 #include <stdio.h>
 
 char operationLog[256];
