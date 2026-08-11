@@ -90,7 +90,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			MessageBox(
 				hwnd, 
-				"V0.4, Created By Spectre2Ux.\nNew Func:\n\n- Help Button\n- Enable Log-File\n- Improved UI\n- Error handling\n- Temp Folder Cleaning on LiteMode\n- (NO WORK Disk Changer)", "Reference (V0.4)",
+				"V0.4, Created By Spectre2Ux.\nNew Func:\n- Enable Log-File\n- delete the LogFile\n- Improved UI\n- Error handling\n- Enable TOPMOST\n- Complete code cleanup\n- logging systems", "Reference (V0.4)",
 				MB_ICONINFORMATION);
 
 			if (WriteFileStatus && LogFile != INVALID_HANDLE_VALUE) {
