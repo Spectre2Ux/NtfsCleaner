@@ -2,6 +2,6 @@
 #include <windows.h>
 int main() {
 	printf("( Debugging, Test Mode (Target Inject)");
-	Sleep(5000);
+	Sleep(4000);
 	return 0;
 }
