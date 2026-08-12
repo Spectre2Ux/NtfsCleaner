@@ -6,3 +6,5 @@ the program features a simple design
 and various cleaning functions. 
 
 NtfsCleaner by Spectre2Ux.
+
+Pre-Beta Version - 0.5
