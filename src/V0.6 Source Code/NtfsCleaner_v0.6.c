@@ -24,12 +24,12 @@ BOOL CleanPrefetch(HWND hwnd);
 void LoadDllForCleanLog(HWND hwnd);
 BOOL SafeModeOff(HWND hwnd);
 BOOL SafeModeOn(HWND hwnd);
-BOOL privileges_check();
+BOOL PrivilegesCheck();
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpstr, int nCmdShow) {
 
-	if (!privileges_check()) {
+	if (!PrivilegesCheck()) {
 		MessageBox(NULL, "Please Open Programm As Administrator!", "Privileges Error.", MB_ICONWARNING);
 		return 1;
 	}
@@ -58,7 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpstr, in
 		return 1;
 	}
 
-	HWND MainWindow = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "NTFSCleaner", "Ntfs-Cleaner (v0.7 Alpha)", WS_OVERLAPPED | WS_VISIBLE | WS_SYSMENU | WS_CAPTION, CW_USEDEFAULT, CW_USEDEFAULT, 800, 500, NULL, NULL, hInstance, NULL);
+	HWND MainWindow = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "NTFSCleaner", "Ntfs-Cleaner (v0.6 Alpha)", WS_OVERLAPPED | WS_VISIBLE | WS_SYSMENU | WS_CAPTION, CW_USEDEFAULT, CW_USEDEFAULT, 800, 500, NULL, NULL, hInstance, NULL);
 	HWND SafeModeMenu = CreateWindowEx(0, "BUTTON", "SafeMode", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_FLAT, 645, 10, 130, 30, MainWindow, (HMENU)1000, hInstance, NULL);
 	HWND HelpButton = CreateWindowEx(0, "BUTTON", "Reference", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_FLAT, 10, 10, 100, 30, MainWindow, (HMENU)1001, hInstance, NULL);
 	HWND LiteButton = CreateWindowEx(0, "BUTTON", "Lite", WS_CHILD | BS_PUSHBUTTON | BS_FLAT, 230, 200, 100, 30, MainWindow, (HMENU)1002, hInstance, NULL);
@@ -92,9 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpstr, in
 	if (SafeModeTrigger == 1) {
 		UpdateLog(MainWindow, "SafeMode Enable.", RGB(106, 227, 20));
 	}
-	if (WriteFileStatus && LogFile != INVALID_HANDLE_VALUE) {
-		WriteLog(MainWindow, "Start NtfsCleaner!");
-	}
+	WriteLog(MainWindow, "Start NtfsCleaner!");
 
 	ShowWindow(MainWindow, nCmdShow);
 	UpdateWindow(MainWindow);
@@ -135,7 +133,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			MessageBox(
 				hwnd,
-				"V0.7, Created By Spectre2Ux.\nNew Func:\n- Now every step is logged.\n- NEW MENU!\n- Improved UI\n- Error handling\n- SafeMode Screenshot Access\n- New SafeMode System\n- Cleaning Prefetch", "Reference (V0.7)",
+				"V0.6, Created By Spectre2Ux.\nNew Func:\n- Now every step is logged.\n- NEW MENU!\n- Improved UI\n- Error handling\n- SafeMode Screenshot Access\n- New SafeMode System\n- Cleaning Prefetch", "Reference (V0.6)",
 				MB_ICONINFORMATION);
 
 			WriteLog(hwnd, "Status Reference Button = Success!");
@@ -245,7 +243,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		SetTextColor(hdc, RGB(255, 255, 255));
 
 		TextOut(hdc, 270, 320, "# <_O Created By Spectre2Ux", (int)strlen("# <_O Created By Spectre2Ux"));
-		TextOut(hdc, 260, 350, "V0.7 Alpha, bugs may be present.", (int)strlen("V0.7 Alpha, bugs may be present."));
+		TextOut(hdc, 260, 350, "V0.6 Alpha, bugs may be present.", (int)strlen("V0.6 Alpha, bugs may be present."));
 
 		EndPaint(hwnd, &ps);
 		break;
@@ -299,7 +297,7 @@ BOOL SafeModeOff(HWND hwnd) {
 	return FALSE;
 }
 
-BOOL privileges_check() {
+BOOL PrivilegesCheck() {
 	BOOL elevated = FALSE;
 	HANDLE tokenHandle;
 	if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &tokenHandle)) {
@@ -334,7 +332,7 @@ void UpdateLog(HWND hwnd, const char* text, COLORREF textColor) {
 }
 
 void CreateFileToWriteLog(HWND hwnd) {
-	LogFile = CreateFile("NtfsCleaner_v0.7_Log.txt", GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	LogFile = CreateFile("NtfsCleaner_v0.6_Log.txt", GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (LogFile == INVALID_HANDLE_VALUE) {
 		UpdateLog(hwnd, "Error Creating LogFile!", RGB(145, 4, 11));
 		MessageBox(hwnd, "Error Creating LogFile!", "Error (ECL1F)", MB_ICONERROR);
@@ -355,7 +353,7 @@ void CreateFileToWriteLog(HWND hwnd) {
 	Sleep(300);
 	char DirectoryPath[MAX_PATH];
 	DWORD CurrentLogFileDirectory = GetCurrentDirectory(MAX_PATH, DirectoryPath);
-	strcat(DirectoryPath, "\\NtfsCleaner_v0.7_Log.txt");
+	strcat(DirectoryPath, "\\NtfsCleaner_v0.6_Log.txt");
 	char LogTextBuffer[510];
 	sprintf(LogTextBuffer, "LogFile Directory: %s", DirectoryPath);
 	UpdateLog(hwnd, LogTextBuffer, RGB(106, 227, 20));
@@ -369,7 +367,7 @@ void DeleteLogFile(HWND hwnd) {
 	WriteFileStatus = 0;
 	char DeleteFilePathBuffer[512];
 	DWORD LogFilePath = GetCurrentDirectory(MAX_PATH, DeleteFilePathBuffer);
-	strcat(DeleteFilePathBuffer, "\\NtfsCleaner_v0.7_Log.txt");
+	strcat(DeleteFilePathBuffer, "\\NtfsCleaner_v0.6_Log.txt");
 	if (DeleteFile(DeleteFilePathBuffer)) {
 		UpdateLog(hwnd, "Success Deleting LogFile!", RGB(106, 227, 20));
 	}
